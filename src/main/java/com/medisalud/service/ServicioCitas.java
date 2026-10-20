@@ -28,10 +28,9 @@ public class ServicioCitas {
     }
 
     public void registrarObservador(ObservadorCita observador) {
-        if (!observadores.contains(observador)) {
-            observadores.add(observador);
-        }
+    observadores.add(observador);
     }
+    
 
     public Cita agendarCita(
             String codigo,
@@ -72,40 +71,23 @@ public class ServicioCitas {
                 .agregarConsulta(diagnostico);
     }
 
-    public Cita cancelarCita(String codigo, String motivo)
-            throws CitaNoEncontradaException,
-            TransicionInvalidaException,
-            CancelacionTardiaException {
+  public Cita cancelarCita(String codigo, String motivo)
+        throws CitaNoEncontradaException, TransicionInvalidaException, CancelacionTardiaException {
+    Cita cita = buscarPorCodigo(codigo);
 
-        Cita cita = buscarPorCodigo(codigo);
-
-        if (!cita.getEstado().puedeTransicionarA(EstadoCita.CANCELADA)) {
-            throw new TransicionInvalidaException(
-                    codigo,
-                    cita.getEstado(),
-                    EstadoCita.CANCELADA
-            );
-        }
-
-        if (cita.getFecha().isBefore(LocalDate.now())) {
-            throw new CancelacionTardiaException(
-                    codigo,
-                    cita.getFecha()
-            );
-        }
-
-        conectarObservadores(cita);
-
-        cita.cancelar(motivo);
-        repositorioCitas.guardar(cita);
-
-        return cita;
+    if (!cita.getEstado().puedeTransicionarA(EstadoCita.CANCELADA)) {
+        throw new TransicionInvalidaException(codigo, cita.getEstado(), EstadoCita.CANCELADA);
     }
 
-    public List<Cita> listarPorMedico(String codigoMedico) {
-        return repositorioCitas.listarPorMedico(codigoMedico);
+    if (cita.getFecha().isBefore(LocalDate.now())) {
+        throw new CancelacionTardiaException(codigo, cita.getFecha());
     }
 
+         conectarObservadores(cita);
+          cita.cancelar(motivo);
+            repositorioCitas.guardar(cita);
+                return cita;
+}
 
     public Map<String, Long> cancelacionesPorMedico() {
 
@@ -158,5 +140,9 @@ public class ServicioCitas {
         repositorioCitas.guardar(cita);
 
         return cita;
+    }
+
+    public List<Cita> listarPorMedico(String codigoMedico) {
+        throw new UnsupportedOperationException("Unimplemented method 'listarPorMedico'");
     }
 }

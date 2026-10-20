@@ -83,6 +83,7 @@ public class ControladorMediSalud {
     public List<Cita> generarReportePorMedico(String codigoMedico) {
         return servicioCitas.listarPorMedico(codigoMedico);
     }
+    
     public Map<String, Long> generarReporteCancelacionesPorMedico() {
     return servicioCitas.cancelacionesPorMedico();
 }
