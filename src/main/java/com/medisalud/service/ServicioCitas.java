@@ -21,12 +21,17 @@ import java.util.stream.Collectors;
 public class ServicioCitas {
 
     private final RepositorioCitas repositorioCitas;
-   
+    private final List<ObservadorCita> observadores = new ArrayList<>();
+
     public ServicioCitas(RepositorioCitas repositorioCitas) {
         this.repositorioCitas = repositorioCitas;
     }
 
-   
+    public void registrarObservador(ObservadorCita observador) {
+        if (!observadores.contains(observador)) {
+            observadores.add(observador);
+        }
+    }
 
     public Cita agendarCita(
             String codigo,

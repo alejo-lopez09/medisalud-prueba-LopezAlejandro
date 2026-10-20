@@ -32,7 +32,8 @@ public class Principal {
         ObservadorCitaNotificacion observador = new ObservadorCitaNotificacion(hiloNotificaciones);
         FachadaAgendamiento fachadaAgendamiento = new FachadaAgendamiento(
                 servicioPacientes, servicioMedicos, servicioCitas, observador);
-               
+                servicioCitas.registrarObservador(observador);
+
         ControladorMediSalud controlador = new ControladorMediSalud(
                 servicioPacientes, servicioMedicos, servicioCitas, servicioFacturacion, fachadaAgendamiento);
 

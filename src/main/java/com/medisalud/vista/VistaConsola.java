@@ -44,8 +44,8 @@ public class VistaConsola {
             System.out.println("4. Consultar historia clinica");
             System.out.println("5. Facturar consulta");
             System.out.println("6. Generar reporte");
-            System.out.println("0. Cancelar cita");
-            System.out.println("7. Salir");
+            System.out.println("7. Cancelar cita");
+            System.out.println("8. Salir");
             String opcion = lector.nextLine();
 
             switch (opcion) {
@@ -67,10 +67,10 @@ public class VistaConsola {
                 case "6":
                     generarReporte();
                     break;
-                    case "0":
+                    case "7":
                         cancelarCita();
                         break;
-                    case "7":
+                    case "8":
                         continuar = false;
                         break;
                 default:
@@ -169,7 +169,7 @@ public class VistaConsola {
         System.out.print("Motivo de la cancelacion: ");
         String motivo = lector.nextLine();
 
-       
+        Cita cita = controlador.cancelarCita(codigoCita, motivo);
         System.out.println("Cita cancelada: " + cita);
         System.out.println("Motivo: " + textoMotivo(cita));
     } catch (CitaNoEncontradaException | TransicionInvalidaException
