@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,9 @@ public class CitaDAO implements RepositorioCitas {
 
     @Override
     public void guardar(Cita cita) {
-       String sql = "INSERT INTO citas (codigo, paciente_codigo, medico_codigo, fecha, estado, motivo_cancelacion) "
-        + "VALUES (?, ?, ?, ?, ?, ?) "
-        + "ON DUPLICATE KEY UPDATE estado = ?, motivo_cancelacion = ?";
+        String sql = "INSERT INTO citas "
+                + "(codigo, paciente_codigo, medico_codigo, fecha, estado, motivo_cancelacion) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conexion = ConexionBD.obtenerConexion();
              PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setString(1, cita.getCodigo());
@@ -39,11 +40,31 @@ public class CitaDAO implements RepositorioCitas {
             sentencia.setDate(4, Date.valueOf(cita.getFecha()));
             sentencia.setString(5, cita.getEstado().name());
             sentencia.setString(6, cita.getMotivoCancelacion());
-            sentencia.setString(7, cita.getEstado().name());
-            sentencia.setString(8, cita.getMotivoCancelacion());
             sentencia.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException excepcion) {
+            if (excepcion.getErrorCode() == 1062) {
+                throw new IllegalArgumentException(
+                        "Ya existe una cita con el codigo " + cita.getCodigo(), excepcion);
+            }
+            throw new RuntimeException("No se pudo guardar la cita " + cita.getCodigo(), excepcion);
         } catch (SQLException excepcion) {
             throw new RuntimeException("No se pudo guardar la cita " + cita.getCodigo(), excepcion);
+        }
+    }
+
+    @Override
+    public void actualizar(Cita cita) {
+        String sql = "UPDATE citas SET estado = ?, motivo_cancelacion = ? WHERE codigo = ?";
+        try (Connection conexion = ConexionBD.obtenerConexion();
+             PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+            sentencia.setString(1, cita.getEstado().name());
+            sentencia.setString(2, cita.getMotivoCancelacion());
+            sentencia.setString(3, cita.getCodigo());
+            if (sentencia.executeUpdate() == 0) {
+                throw new IllegalArgumentException("No existe una cita con el codigo " + cita.getCodigo());
+            }
+        } catch (SQLException excepcion) {
+            throw new RuntimeException("No se pudo actualizar la cita " + cita.getCodigo(), excepcion);
         }
     }
 

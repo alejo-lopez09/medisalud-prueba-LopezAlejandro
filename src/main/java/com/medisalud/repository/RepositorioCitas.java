@@ -7,6 +7,8 @@ public interface RepositorioCitas {
 
     void guardar(Cita cita);
 
+    void actualizar(Cita cita);
+
     Cita buscarPorCodigo(String codigo);
 
     List<Cita> listarTodas();

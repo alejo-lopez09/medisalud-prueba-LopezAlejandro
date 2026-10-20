@@ -12,6 +12,17 @@ public class RepositorioCitasMemoria implements RepositorioCitas {
 
     @Override
     public synchronized void guardar(Cita cita) {
+        if (citasPorCodigo.containsKey(cita.getCodigo())) {
+            throw new IllegalArgumentException("Ya existe una cita con el codigo " + cita.getCodigo());
+        }
+        citasPorCodigo.put(cita.getCodigo(), cita);
+    }
+
+    @Override
+    public synchronized void actualizar(Cita cita) {
+        if (!citasPorCodigo.containsKey(cita.getCodigo())) {
+            throw new IllegalArgumentException("No existe una cita con el codigo " + cita.getCodigo());
+        }
         citasPorCodigo.put(cita.getCodigo(), cita);
     }
 

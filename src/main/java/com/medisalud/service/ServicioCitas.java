@@ -85,7 +85,7 @@ public class ServicioCitas {
 
          conectarObservadores(cita);
           cita.cancelar(motivo);
-            repositorioCitas.guardar(cita);
+            repositorioCitas.actualizar(cita);
                 return cita;
 }
 
@@ -137,7 +137,7 @@ public class ServicioCitas {
 
         conectarObservadores(cita);
         cita.cambiarEstado(nuevoEstado);
-        repositorioCitas.guardar(cita);
+        repositorioCitas.actualizar(cita);
 
         return cita;
     }

@@ -155,7 +155,8 @@ public class VistaConsola {
                 System.out.println("Estado actualizado: " + controlador.buscarCita(codigoCita).getEstado());
             }
         } catch (PacienteNoEncontradoException | MedicoNoEncontradoException
-                | CitaNoEncontradaException | TransicionInvalidaException | DateTimeParseException excepcion) {
+                | CitaNoEncontradaException | TransicionInvalidaException
+                | DateTimeParseException | IllegalArgumentException excepcion) {
             System.out.println("No se pudo agendar la cita: " + excepcion.getMessage());
         }
     }
