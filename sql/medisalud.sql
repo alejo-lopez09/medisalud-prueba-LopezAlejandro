@@ -89,3 +89,8 @@ INSERT IGNORE INTO citas (codigo, paciente_codigo, medico_codigo, fecha, estado)
     ('C028', 'P008', 'M004', '2026-11-26', 'CANCELADA'),
     ('C029', 'P009', 'M007', '2026-11-01', 'ATENDIDA'),
     ('C030', 'P010', 'M010', '2026-11-04', 'CONFIRMADA');
+
+
+select * from citas;
+SELECT * FROM pacientes;
+SELECT * FROM medicos;
