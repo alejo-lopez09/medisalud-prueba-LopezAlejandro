@@ -139,3 +139,11 @@ conservan entre ejecuciones (y aunque se borre el contenedor con `docker compose
   clínica en memoria; no hay tabla que los guarde, así que no persisten entre ejecuciones.
 - Si al ejecutar aparece `No suitable driver found for jdbc:mysql://...`, falta el
   conector en el *classpath*: crear `lib/` y copiar allí `mysql-connector-j-8.3.0.jar`.
+
+
+# EXAMEN
+## Ya hize los cambios a la base de datos y restricciones, el codigo funciona bien hasta la parte donde la cita se agenda
+![alt text](image.png)
+
+
+### Implemente la solucioon en motivo-cancelacion, tenia un error de syntax

@@ -106,7 +106,7 @@ public class ServicioCitas {
         return repositorioCitas.listarPorMedico(codigoMedico);
     }
 
-    
+
     public Map<String, Long> cancelacionesPorMedico() {
 
         Map<String, Long> conteo = repositorioCitas.listarTodas()

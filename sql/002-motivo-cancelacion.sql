@@ -24,3 +24,4 @@ PREPARE aplicar FROM @sentencia;
 EXECUTE aplicar;
 DEALLOCATE PREPARE aplicar;
 
+#

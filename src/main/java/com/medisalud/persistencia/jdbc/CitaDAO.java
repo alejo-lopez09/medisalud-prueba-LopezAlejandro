@@ -28,7 +28,9 @@ public class CitaDAO implements RepositorioCitas {
 
     @Override
     public void guardar(Cita cita) {
-
+       String sql = "INSERT INTO citas (codigo, paciente_codigo, medico_codigo, fecha, estado, motivo_cancelacion) "
+        + "VALUES (?, ?, ?, ?, ?, ?) "
+        + "ON DUPLICATE KEY UPDATE estado = ?, motivo_cancelacion = ?";
         try (Connection conexion = ConexionBD.obtenerConexion();
              PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setString(1, cita.getCodigo());
@@ -47,7 +49,7 @@ public class CitaDAO implements RepositorioCitas {
 
     @Override
     public Cita buscarPorCodigo(String codigo) {
-      
+       String sql = "SELECT codigo, paciente_codigo, medico_codigo, fecha, estado, motivo_cancelacion FROM citas WHERE codigo = ?";
         try (Connection conexion = ConexionBD.obtenerConexion();
              PreparedStatement sentencia = conexion.prepareStatement(sql)) {
             sentencia.setString(1, codigo);
@@ -64,7 +66,7 @@ public class CitaDAO implements RepositorioCitas {
 
     @Override
     public List<Cita> listarTodas() {
-       
+        String sql = "SELECT codigo, paciente_codigo, medico_codigo, fecha, estado, motivo_cancelacion FROM citas";
         return listarConFiltro(sql, null);
     }
 
