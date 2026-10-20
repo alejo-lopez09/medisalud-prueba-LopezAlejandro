@@ -143,6 +143,6 @@ public class ServicioCitas {
     }
 
     public List<Cita> listarPorMedico(String codigoMedico) {
-        throw new UnsupportedOperationException("Unimplemented method 'listarPorMedico'");
+        return repositorioCitas.listarPorMedico(codigoMedico);
     }
 }
